@@ -11,6 +11,13 @@ class items:
         self.__lsum=lsum
 
     def display(self):
+        print("商品序号" + ":" + "{}".format(self.__num))
+        print("商品名" + ":" + self.__name)
+        print("单价" + ":" + "{}".format(self.__price))
+        print("总数量" + ":" + "{}".format(self.__sum))
+        print("剩余数量" + ":" + "{}".format(self.__lsum))
+
+    def income(self):
         income=self.__price*(self.__sum-self.__lsum)
         return income
 
@@ -20,3 +27,5 @@ class items:
         self.__price = reprice
         self.__sum = resum
         self.__lsum = relsum
+
+
