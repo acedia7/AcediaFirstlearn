@@ -21,7 +21,7 @@ with open('data.csv', 'r', encoding='utf-8-sig') as f:
         try:
             lis = driver.find_elements(By.XPATH, ".//ul[@style='list-style-type:none;']/li")
             for li in lis:
-                # li.find_element(By.XPATH, './a').click()
+                li.find_element(By.XPATH, './a').click()
                 name = li.find_element(By.XPATH, './a').text
                 Name.append(name)
                 count = li.find_element(By.XPATH, "./span").text
@@ -38,21 +38,33 @@ with open('data.csv', 'r', encoding='utf-8-sig') as f:
 N = []
 for i in n:
     aa = ""
+    lenth = len(i)
+    l = 1
     for j in i:
         if j == '':
             aa = ""
         else:
-            aa += j + "\n"
+            if l == lenth:
+                aa += j
+            else:
+                aa += j + "\n"
+        l += 1
     N.append(aa)
 
 C = []
 for i in c:
     bb = ""
+    lenth = len(i)
+    l = 1
     for j in i:
         if j == '':
             bb = ""
         else:
-            bb += j + "\n"
+            if l == lenth:
+                bb += j
+            else:
+                bb += j + "\n"
+        l += 1
     C.append(bb)
 
 print(C)
