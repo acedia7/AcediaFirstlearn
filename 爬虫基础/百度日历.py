@@ -83,6 +83,7 @@ for j in range(1, 13):
             e = dd.find_element(By.XPATH, f"./div[3]/div[1]/div")
             e1 = e.text
             # print(e1)
+            dic["标题"] = e1
             dic["内容"] = e1
             if e1[-2:-1] == "出生":
                 dic["事件"] = "birth"
