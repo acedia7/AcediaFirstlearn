@@ -7,28 +7,62 @@ import pandas as pd
 driver = webdriver.Chrome()
 driver.maximize_window()
 
-c=[]
-n=[]
+c = []
+n = []
+h = []
 with open('data.csv', 'r', encoding='utf-8-sig') as f:
     reader = csv.DictReader(f)
     for i in reader:
-        print(i)
+        Name = []
+        Count = []
+        # print(i)
         driver.get(i['详情链接'])
         time.sleep(0.2)
         try:
-            driver.find_elements(By.XPATH, "/html/body/div/div[2]/div[2]/form/div/div[1]/div/ul/li[1]/a")[0].click()
-            count=driver.find_elements(By.XPATH,'/html/body/div/div[2]/div[2]/form/div/div[1]/div/ul/li[1]/span')
-            c.append(count[0].text)
-            name=driver.find_elements(By.XPATH,'/html/body/div/div[2]/div[2]/form/div/div[1]/div/ul/li[1]/a')
-            n.append(name[0].text)
-            time.sleep(2)
+            lis = driver.find_elements(By.XPATH, ".//ul[@style='list-style-type:none;']/li")
+            for li in lis:
+                # li.find_element(By.XPATH, './a').click()
+                name = li.find_element(By.XPATH, './a').text
+                Name.append(name)
+                count = li.find_element(By.XPATH, "./span").text
+                Count.append(count)
+            n.append(Name)
+            c.append(Count)
+            h.append(i['详情链接'])
         except IndexError:
             pass
+    print(n)
+    print(c)
+    print(h)
 
-file="data.csv"
+N = []
+for i in n:
+    aa = ""
+    for j in i:
+        if j == '':
+            aa = ""
+        else:
+            aa += j + "\n"
+    N.append(aa)
+
+C = []
+for i in c:
+    bb = ""
+    for j in i:
+        if j == '':
+            bb = ""
+        else:
+            bb += j + "\n"
+    C.append(bb)
+
+print(C)
+print(N)
+
+file = "data.csv"
 data = pd.read_csv(file, encoding='utf-8')
 new_file = 'data_new.csv'
-lenth=len(c)
-for i in range(0,lenth):
-    data['下载次数'] = data['下载次数'].mask(data['附件名'] == n[i], c[i])
+lenth = len(c)
+for i in range(0, lenth):
+    data['下载次数'] = data['下载次数'].mask(data['详情链接'] == h[i], C[i])
+    data['附件名'] = data['附件名'].mask(data['详情链接'] == h[i], N[i])
 data.to_csv(new_file, index=False)

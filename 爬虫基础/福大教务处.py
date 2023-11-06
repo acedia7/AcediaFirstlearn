@@ -54,9 +54,9 @@ def get(url):
                     href = "https://jwch.fzu.edu.cn/" + li1.xpath("./a/@href")[0]
                     # print(href)
                     dic["下载链接"] = href
-                    name = li1.xpath("./a/text()")[0]
+                    # name = li1.xpath("./a/text()")[0]
                     # print(name)
-                    dic["附件名"] = name
+                    dic["附件名"] = ''
                     dic["下载次数"] = ""
 
             time.sleep(0.05)
